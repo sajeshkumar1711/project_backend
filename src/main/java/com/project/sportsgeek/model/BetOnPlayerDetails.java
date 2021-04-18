@@ -19,10 +19,9 @@ import java.io.Serializable;
 @EqualsAndHashCode
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class BetOnPlayerDetails implements Serializable {
-    @QueryHelperColumnName(name = "BetPlayerId")
+    @QueryHelperColumnName(name = "BetTeamId")
     @QueryHelperPrimaryKey
     private int betPlayerId;
     private int playerNo;
     private int playerId;
-    private int playerPoints;
 }

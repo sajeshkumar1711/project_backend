@@ -2,7 +2,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/sportsgeekdb
     username: root
-    password: root
+    password: elephant
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
@@ -18,11 +18,12 @@ spring:
       max-request-size: 15MB
 
 server:
-  port: 8081
+  port: 8080
+
 
 ## MULTIPART (MultipartProperties)
 # Enable multipart uploads
-#db:
-#  queries:
-#    listAllBetOnPlayers: "SELECT b.BetPlayerId as BetPlayerId, u.UserId as UserId, m.MatchId as MatchId, b.TotalGamePoints as TotalGamePoints FROM BetOnPlayer as b INNER JOIN User as u on b.UserId = u.UserId INNER JOIN Matches as m on b.MatchId = m.MatchId"
-#    listAllBetPlayer: "SELECT * FROM BetOnPlayer"
+db:
+  queries:
+    listAllBetOnPlayers: "SELECT b.BetPlayerId as BetPlayerId, u.UserId as UserId, m.MatchId as MatchId, b.TotalGamePoints as TotalGamePoints FROM BetOnPlayer as b INNER JOIN User as u on b.UserId = u.UserId INNER JOIN Matches as m on b.MatchId = m.MatchId"
+    listAllBetPlayer: "SELECT * FROM BetOnPlayer"

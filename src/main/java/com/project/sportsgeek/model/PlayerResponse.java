@@ -27,5 +27,4 @@ public class PlayerResponse implements Serializable {
     private String name;
     private String playerType;
     private String profilePicture;
-    private Double Credits;
 }

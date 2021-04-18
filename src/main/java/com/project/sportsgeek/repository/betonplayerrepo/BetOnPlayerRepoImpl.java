@@ -28,7 +28,7 @@ public class BetOnPlayerRepoImpl implements BetOnPlayerRepository{
     @Override
     public List<BetOnPlayerResponse> findAllBetOnPlayer() {
 //        return jdbcTemplate.query(serviceProperties.getDbQueries().getListAllBetPlayer(), new BetOnPlayerRowMapper());
-        String sql = "SELECT b.BetPlayerId as BetPlayerId, u.Username as UserName,u.FirstName as FirstName,u.LastName as LastName, t.ShortName as Team1, t1.ShortName as Team2, m.StartDatetime as StartDateTime, b.TotalGamePoints as TotalGamePoints " +
+        String sql = "SELECT  b.BetPlayerId as BetPlayerId, u.Username as UserName,u.FirstName as FirstName,u.LastName as LastName, t.ShortName as Team1, t1.ShortName as Team2, m.StartDatetime as StartDateTime, b.TotalGamePoints as TotalGamePoints " +
                 "FROM BetOnPlayer as b INNER JOIN User as u on b.UserId = u.UserId INNER JOIN Matches as m on b.MatchId = m.MatchId INNER JOIN Team as t on m.Team1 = t.TeamId  INNER JOIN Team as t1 on m.Team2 = t1.TeamId";
         return jdbcTemplate.query(sql,new BetOnPlayerRowMapper());
     }

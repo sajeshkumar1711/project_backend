@@ -6,7 +6,6 @@ import com.project.sportsgeek.annotations.QueryHelperPrimaryKey;
 import io.swagger.annotations.ApiModel;
 import lombok.*;
 
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Builder
@@ -16,17 +15,21 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@ApiModel(description = "Player Model")
+@ApiModel(description = "BetOnPlayerDetails Response Model")
 @EqualsAndHashCode
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Player implements Serializable {
-    @QueryHelperColumnName(name = "PlayerId")
+public class BetPlayerDetailsResponse implements Serializable {
+
+    @QueryHelperColumnName(name = "BetPlayerId")
     @QueryHelperPrimaryKey
-    private int playerId;
-    private int teamId;
-    @NotNull
+    private int betPlayerId;
+    private int playerNo;
     private String name;
-    private int typeId;
+    private String team;
+    private String type;
     private String profilePicture;
-    private Double credits;
+    private String userName;
+    private String firstName;
+    private String lastName;
+    private int playerPoints;
 }

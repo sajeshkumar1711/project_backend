@@ -22,7 +22,7 @@ public class PlayerRepoImpl implements PlayerRepository {
     @Override
     public List<PlayerResponse> findAllPlayers() {
 //       String sql = "SELECT PlayerId,TeamId,Name,TypeId,ProfilePicture FROM Player";
-        String sql = "SELECT p.PlayerId as PlayerId, t.Name as TeamName, p.Name as Name,pt.TypeName as PlayerType, p.ProfilePicture as ProfilePicture " +
+        String sql = "SELECT p.Credits as Credits,p.PlayerId as PlayerId, t.Name as TeamName, p.Name as Name,pt.TypeName as PlayerType, p.ProfilePicture as ProfilePicture " +
                 "FROM Player as p INNER JOIN PlayerType as pt on p.TypeId = pt.PlayerTypeId INNER JOIN Team as t on p.TeamId=t.TeamId";
        return jdbcTemplate.query(sql, new PlayerRowMapper());
     }
@@ -30,7 +30,7 @@ public class PlayerRepoImpl implements PlayerRepository {
     @Override
     public List<PlayerResponse> findPlayerByPlayerId(int id) throws Exception {
 //        String sql = "SELECT PlayerId,TeamId,Name,TypeId,ProfilePicture FROM Player WHERE PlayerId="+id;
-        String sql = "SELECT p.PlayerId as PlayerId, t.Name as TeamName, p.Name as Name,pt.TypeName as PlayerType, p.ProfilePicture as ProfilePicture " +
+        String sql = "SELECT p.Credits as Credits,p.PlayerId as PlayerId, t.Name as TeamName, p.Name as Name,pt.TypeName as PlayerType, p.ProfilePicture as ProfilePicture " +
                 "FROM Player as p INNER JOIN PlayerType as pt on p.TypeId = pt.PlayerTypeId INNER JOIN Team as t on p.TeamId=t.TeamId WHERE p.PlayerId="+id;
         return jdbcTemplate.query(sql, new PlayerRowMapper());
     }
@@ -38,7 +38,7 @@ public class PlayerRepoImpl implements PlayerRepository {
     @Override
     public List<PlayerResponse> findPlayerByPlayerType(int id) throws Exception {
 //        String sql = "SELECT PlayerId,TeamId,Name,TypeId,ProfilePicture FROM Player WHERE TypeId="+id;
-        String sql = "SELECT p.PlayerId as PlayerId, t.Name as TeamName, p.Name as Name,pt.TypeName as PlayerType, p.ProfilePicture as ProfilePicture " +
+        String sql = "SELECT p.Credits as Credits,p.PlayerId as PlayerId, t.Name as TeamName, p.Name as Name,pt.TypeName as PlayerType, p.ProfilePicture as ProfilePicture " +
                 "FROM Player as p INNER JOIN PlayerType as pt on p.TypeId = pt.PlayerTypeId INNER JOIN Team as t on p.TeamId=t.TeamId WHERE p.TypeId="+id;
         return jdbcTemplate.query(sql, new PlayerRowMapper());
     }
@@ -46,7 +46,7 @@ public class PlayerRepoImpl implements PlayerRepository {
     @Override
     public List<PlayerResponse> findPlayerByTeamId(int id) throws Exception {
 //        String sql = "SELECT PlayerId,TeamId,Name,TypeId,ProfilePicture FROM Player WHERE TeamId="+id;
-        String sql = "SELECT p.PlayerId as PlayerId, t.Name as TeamName, p.Name as Name,pt.TypeName as PlayerType, p.ProfilePicture as ProfilePicture " +
+        String sql = "SELECT p.Credits as Credits,p.PlayerId as PlayerId, t.Name as TeamName, p.Name as Name,pt.TypeName as PlayerType, p.ProfilePicture as ProfilePicture " +
                 "FROM Player as p INNER JOIN PlayerType as pt on p.TypeId = pt.PlayerTypeId INNER JOIN Team as t on p.TeamId=t.TeamId WHERE p.TeamId="+id;
         return jdbcTemplate.query(sql, new PlayerRowMapper());
     }
@@ -62,7 +62,7 @@ public class PlayerRepoImpl implements PlayerRepository {
     @Override
     public boolean updatePlayer(int id, Player player) throws Exception {
         String sql = "UPDATE `" + "player" + "` set "
-                + "`TeamId` = :teamId, `Name` = :name, `TypeId` = :typeId where `PlayerId`="+id;
+                + "`TeamId` = :teamId, `Name` = :name, `TypeId` = :typeId, `Credits` = :credits where `PlayerId`="+id;
         player.setPlayerId(id);
         return jdbcTemplate.update(sql, new BeanPropertySqlParameterSource(player)) > 0;
     }

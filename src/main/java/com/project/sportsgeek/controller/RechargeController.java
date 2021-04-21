@@ -15,12 +15,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/recharge",produces = MediaType.APPLICATION_JSON_VALUE)
+//@RequestMapping(path = "/recharge",produces = MediaType.APPLICATION_JSON_VALUE)
 public class RechargeController {
     @Autowired
     RechargeService rechargeService;
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path = "/recharge", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiResponses(value =
             {
                     @ApiResponse(code = 200, message = "success", response = Recharge.class),
@@ -32,7 +32,7 @@ public class RechargeController {
         return new ResponseEntity<>(rechargeList, HttpStatus.valueOf(rechargeList.getCode()));
     }
 
-    @GetMapping(value = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path = "/recharge/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiResponses(value =
             {
                     @ApiResponse(code = 200, message = "success", response = Recharge.class),
@@ -40,11 +40,25 @@ public class RechargeController {
                     @ApiResponse(code = 500, message = "Unfortunately there is technical error while processing your request", response = ResultException.class)
             }
     )
-    public ResponseEntity<Result<Recharge>> getRechargeByUserId(@PathVariable int id) throws Exception {
-        Result<Recharge> rechargeList = rechargeService.findRechargeByUserId(id);
+    public ResponseEntity<Result<Recharge>> getRechargeByRechargeId(@PathVariable int id) throws Exception {
+        Result<Recharge> rechargeList = rechargeService.findRechargeByRechargeId(id);
         return new ResponseEntity<>(rechargeList, HttpStatus.valueOf(rechargeList.getCode()));
     }
-    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+
+    @GetMapping(path = "/users/{id}/recharge", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiResponses(value =
+            {
+                    @ApiResponse(code = 200, message = "success", response = Recharge.class),
+                    @ApiResponse(code = 404, message = "Bad request", response = ResultException.class),
+                    @ApiResponse(code = 500, message = "Unfortunately there is technical error while processing your request", response = ResultException.class)
+            }
+    )
+    public ResponseEntity<Result<List<Recharge>>> getRechargeByUserId(@PathVariable int id) throws Exception {
+        Result<List<Recharge>> rechargeList = rechargeService.findRechargeByUserId(id);
+        return new ResponseEntity<>(rechargeList, HttpStatus.valueOf(rechargeList.getCode()));
+    }
+
+    @PostMapping(path = "/recharge", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiResponses(value =
             {
                     @ApiResponse(code = 201, message = "success", response = Recharge.class),
@@ -56,7 +70,8 @@ public class RechargeController {
         Result<Recharge> rechargeResult = rechargeService.addRecharge(recharge);
         return new ResponseEntity(rechargeResult,HttpStatus.valueOf(rechargeResult.getCode()));
     }
-    @PutMapping(value = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
+
+    @PutMapping(value = "/recharge/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiResponses(value =
             {
                     @ApiResponse(code = 201, message = "success", response = Recharge.class),
@@ -68,7 +83,8 @@ public class RechargeController {
         Result<Recharge> rechargeResult = rechargeService.updateRecharge(id,recharge);
         return new ResponseEntity(rechargeResult,HttpStatus.valueOf(rechargeResult.getCode()));
     }
-    @DeleteMapping(value = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
+
+    @DeleteMapping(value = "/recharge/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiResponses(value =
             {
                     @ApiResponse(code = 200, message = "success", response = Recharge.class),

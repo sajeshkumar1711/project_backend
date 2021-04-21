@@ -13,4 +13,5 @@ public interface PublicChatRepository {
     List<PublicChatWithUser> findPublicChatById(int id) throws Exception;
     int addPublicChat(PublicChat publicChat) throws Exception;
     boolean updatePublicChat(int id, PublicChat publicChat) throws Exception;
+    int deletePublicChat(int id) throws Exception;
 }

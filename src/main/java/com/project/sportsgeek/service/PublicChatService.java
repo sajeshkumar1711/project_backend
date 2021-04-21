@@ -53,4 +53,14 @@ public class PublicChatService {
         throw new ResultException(new Result<>(400, "Unable to update the given Public Chat details! Please try again!", new ArrayList<>(Arrays
                 .asList(new Result.SportsGeekSystemError(publicChat.hashCode(), "given PublicChatId('"+id+"') does not exists")))));
     }
+
+    public Result<Integer> deletePublicChat(int id) throws Exception{
+        int data = publicChatRepository.deletePublicChat(id);
+        if (data > 0) {
+            return new Result<>(200,"Public Chat Deleted Successfully",data);
+        }
+        else {
+            throw new ResultException((new Result<>(404,"No Public Chat found to delete,please try again","PublicChat with id=('"+ id +"') not found")));
+        }
+    }
 }

@@ -17,12 +17,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/contest",produces = MediaType.APPLICATION_JSON_VALUE)
+//@RequestMapping(path = "/contest",produces = MediaType.APPLICATION_JSON_VALUE)
 public class BetOnTeamController {
     @Autowired
     BetOnTeamService betonteamservice;
 
-    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path = "/contest", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiResponses(value =
             {
                     @ApiResponse(code = 201, message = "success", response = BetOnTeam.class),
@@ -35,7 +35,7 @@ public class BetOnTeamController {
         return new ResponseEntity(betonResult, HttpStatus.valueOf(betonResult.getCode()));
     }
 
-    @GetMapping(value = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path = "/contest/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiResponses(value =
             {
                     @ApiResponse(code = 200, message = "success", response = BetOnTeam.class),
@@ -49,7 +49,7 @@ public class BetOnTeamController {
         return new ResponseEntity<>(contestList, HttpStatus.valueOf(contestList.getCode()));
     }
 
-    @GetMapping(value = "/contestResult/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/matches/{matchId}/contest",produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiResponses(value =
             {
                     @ApiResponse(code = 200, message = "success", response = BetOnTeam.class),
@@ -57,13 +57,13 @@ public class BetOnTeamController {
                     @ApiResponse(code = 500, message = "Unfortunately there is technical error while processing your request", response = ResultException.class)
             }
     )
-    public ResponseEntity<Result<List<BetOnTeamWithResult>>> getContestResultByMatchId(@PathVariable int id) throws Exception {
+    public ResponseEntity<Result<List<BetOnTeamWithResult>>> getContestResultByMatchId(@PathVariable int matchId) throws Exception {
 //		 	System.out.println("Controller : " + id);
-        Result<List<BetOnTeamWithResult>> contestList = betonteamservice.findContestResultByMatchId(id);
+        Result<List<BetOnTeamWithResult>> contestList = betonteamservice.findContestResultByMatchId(matchId);
         return new ResponseEntity<>(contestList, HttpStatus.valueOf(contestList.getCode()));
     }
 
-    @GetMapping(value = "/{userId}/{matchId}",produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/users/{userId}/contest/{matchId}",produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiResponses(value =
             {
                     @ApiResponse(code = 200, message = "success", response = BetOnTeam.class),
@@ -76,7 +76,7 @@ public class BetOnTeamController {
         return new ResponseEntity<>(contestList, HttpStatus.valueOf(contestList.getCode()));
     }
 
-    @PutMapping(value = "/update/{betTeamId}",produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/contest/{betTeamId}",produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiResponses(value =
             {
                     @ApiResponse(code = 201, message = "success", response = BetOnTeam.class),

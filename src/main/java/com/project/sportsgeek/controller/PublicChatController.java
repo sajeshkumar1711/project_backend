@@ -18,7 +18,7 @@ import javax.validation.constraints.Pattern;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/publicChat",produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path = "/public-chat",produces = MediaType.APPLICATION_JSON_VALUE)
 public class PublicChatController {
 
     @Autowired
@@ -70,8 +70,21 @@ public class PublicChatController {
                     @ApiResponse(code = 500, message = "Unfortunately there is technical error while processing your request", response = ResultException.class)
             }
     )
-    public ResponseEntity<Result<PublicChat>> updateVenue(@PathVariable @Valid @Pattern(regexp = "[0-9]*") int id,@RequestBody(required = true) @Valid PublicChat publicChat) throws Exception {
+    public ResponseEntity<Result<PublicChat>> updatePublicChat(@PathVariable @Valid @Pattern(regexp = "[0-9]*") int id,@RequestBody(required = true) @Valid PublicChat publicChat) throws Exception {
         Result<PublicChat> publicChatResult = publicChatService.updatePublicChat(id, publicChat);
         return new ResponseEntity(publicChatResult,HttpStatus.valueOf(publicChatResult.getCode()));
+    }
+
+    @DeleteMapping(value = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiResponses(value =
+            {
+                    @ApiResponse(code = 200, message = "success", response = PublicChat.class),
+                    @ApiResponse(code = 404, message = "Bad request", response = ResultException.class),
+                    @ApiResponse(code = 500, message = "Unfortunately there is technical error while processing your request", response = ResultException.class)
+            }
+    )
+    public ResponseEntity<Result<PublicChat>> deletePublicChatById(@PathVariable @Valid @Pattern(regexp = "[0-9]*") int id) throws Exception {
+        Result<Integer> integerResult =  publicChatService.deletePublicChat(id);
+        return new ResponseEntity(integerResult,HttpStatus.valueOf(integerResult.getCode()));
     }
 }

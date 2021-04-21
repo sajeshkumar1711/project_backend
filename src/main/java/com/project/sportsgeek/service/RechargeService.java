@@ -23,13 +23,25 @@ public class RechargeService {
         return new Result<>(200,rechargeList);
     }
 
-    public Result<Recharge> findRechargeByUserId(int id) throws Exception {
-        List<Recharge> rechargeList = rechargeRepository.findRechargeByUserId(id);
+    public Result<Recharge> findRechargeByRechargeId(int id) throws Exception {
+        List<Recharge> rechargeList = rechargeRepository.findRechargeByRechargeId(id);
         if (rechargeList.size() > 0) {
             return new Result<>(200, rechargeList.get(0));
         }
         else {
-            throw new ResultException((new Result<>(404,"No Recharge's found,please try again","User with id=('"+ id +"') not found")));
+//             throw new ResultException((new Result<>(404,"No Recharge's found,please try again","Recharge with id=('"+ id +"') not found")));
+            return new Result(404,"No Recharge's found,please try again","Recharge with id=('"+ id +"') not found");
+        }
+    }
+
+    public Result<List<Recharge>> findRechargeByUserId(int id) throws Exception {
+        List<Recharge> rechargeList = rechargeRepository.findRechargeByUserId(id);
+        if (rechargeList.size() > 0) {
+            return new Result<>(200, rechargeList);
+        }
+        else {
+//            throw new ResultException((new Result<>(404,"No Recharge's found,please try again","Recharge for User with id=('"+ id +"') not found")));
+            return new Result(404,"No Recharge's found,please try again","Recharge with id=('"+ id +"') not found");
         }
     }
 

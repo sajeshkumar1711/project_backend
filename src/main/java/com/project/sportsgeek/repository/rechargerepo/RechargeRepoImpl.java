@@ -6,6 +6,8 @@ import com.project.sportsgeek.query.QueryGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -23,20 +25,31 @@ public class RechargeRepoImpl implements RechargeRepository {
     }
 
     @Override
-    public List<Recharge> findRechargeByUserId(int i) throws Exception {
+    public List<Recharge> findRechargeByRechargeId(int id) throws Exception {
+        String sql = "SELECT Recharge.UserId as UserId,UserName,Points,RechargeDatetime,RechargeId FROM Recharge Inner Join User on User.UserId = Recharge.UserId WHERE RechargeId=" + id;
+        return jdbcTemplate.query(sql,new RechargeRowMapper());
+    }
+
+    @Override
+    public List<Recharge> findRechargeByUserId(int id) throws Exception {
 //        String sql = "SELECT * FROM Recharge WHERE UserId=" + i;
-        String sql = "SELECT Recharge.UserId as UserId,UserName,Points,RechargeDatetime,RechargeId FROM Recharge Inner Join User on User.UserId = Recharge.UserId WHERE Recharge.UserId=" + i;
+        String sql = "SELECT Recharge.UserId as UserId,UserName,Points,RechargeDatetime,RechargeId FROM Recharge Inner Join User on User.UserId = Recharge.UserId WHERE Recharge.UserId=" + id;
         return jdbcTemplate.query(sql,new RechargeRowMapper());
     }
 
     @Override
     public int addRecharge(Recharge recharge) throws Exception {
         try {
+            KeyHolder holder = new GeneratedKeyHolder();
             String sql = "INSERT  INTO Recharge(UserId,Points) VALUES("+recharge.getUserId()+",'"+recharge.getPoints()+"')";
-            jdbcTemplate.update(sql,new BeanPropertySqlParameterSource(recharge));
+            jdbcTemplate.update(sql,new BeanPropertySqlParameterSource(recharge), holder);
             String update_user ="Update User SET AvailablePoints=AvailablePoints+"+recharge.getPoints()+" WHERE UserId="+recharge.getUserId();
-            jdbcTemplate.update(update_user,new BeanPropertySqlParameterSource(recharge));
-            return 1;
+            int n = jdbcTemplate.update(update_user,new BeanPropertySqlParameterSource(recharge));
+            if(n > 0) {
+                return holder.getKey().intValue();
+            }else {
+                return 0;
+            }
         }catch (Exception e) {
             return 0;
         }

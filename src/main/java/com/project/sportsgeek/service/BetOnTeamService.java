@@ -38,7 +38,7 @@ public class BetOnTeamService {
             return new Result<>(200, contestList);
         }
         else {
-            return new  Result(404,"No Contest's found,please try again","Match with id=('"+ id +"') not found");
+            return new Result(404,"No Contest's found,please try again","Match with id=('"+ id +"') not found");
         }
     }
     public Result<List<BetOnTeamWithResult>> findContestResultByMatchId(int id) throws Exception {
@@ -48,7 +48,7 @@ public class BetOnTeamService {
             return new Result<>(200, contestList);
         }
         else {
-            return new  Result(404,"No Contest's found,please try again","Match with id=('"+ id +"') not found");
+            return new Result(404,"No Contest's found,please try again","Match with id=('"+ id +"') not found");
         }
     }
     public Result<BetOnTeam> findContestByUserAndMatch(int userid,int matchid) throws Exception {
